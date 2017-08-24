@@ -2,12 +2,7 @@ var date = new Date();
 var currentYear = date.getFullYear();
 var currentMonthNumber = date.getMonth();
 var currentMonthNumberPlus1 = currentMonthNumber + 1;
-var currentMonth = getCurrentMonth();
-var daysInTheMonth = getDaysInMonth();
-var dayOfTheWeek = getDayOfTheWeek();
 var today = date.getDate();
-var daysArray = [];
-var isDayBlank = getBlankDay();
 
 function getCurrentMonth() {
   var month;
@@ -50,7 +45,11 @@ function getCurrentMonth() {
       break;
   }
   return month;
-}
+};
+
+function getDaysInMonth() {
+  return Math.round(((new Date(currentYear, currentMonthNumberPlus1))-(new Date(currentYear, currentMonthNumberPlus1 - 1)))/86400000);
+};
 
 function getDayOfTheWeek() {
   var day;
@@ -78,39 +77,38 @@ function getDayOfTheWeek() {
       break;
   }
   return day;
-}
+};
 
-function getDaysInMonth() {
-  return Math.round(((new Date(currentYear, currentMonthNumberPlus1))-(new Date(currentYear, currentMonthNumberPlus1 - 1)))/86400000);
-}
-
-function printDays(days) {
-  for (var counter = 1; counter <= days; counter++)
-    daysArray.push(counter);
+function makeDaysArray() {
+  var daysArray = [];
+  for (var days = 0; days <= getDaysInMonth(); days++)
+    daysArray.push(days);
   return daysArray;
-}
+};
 
-function getBlankDay() {
-  return new Date(currentYear, currentMonthNumber, 1).getDay();
-}
-
-document.write(dayOfTheWeek);
-document.write(today);
-document.write(currentMonth);
-document.write(currentYear);
-document.write(daysInTheMonth);
-document.write(printDays(daysInTheMonth));
-
-document.getElementById("month-year").innerHTML = currentMonth + " " + currentYear;
+console.log(makeDaysArray());
 
 // build dates part of table
-var tbodyHTML = "<tr>";
-for (var counter = 0; counter < 7; counter++)
-  // if (isDayBlank)
-  //   tbodyHTML += "<td>" + "</td>";
-  // else
-    tbodyHTML += "<td>" + daysArray[counter] + "</td>";
-tbodyHTML += "</tr>";
-document.getElementsByTagName("tbody")[0].innerHTML = tbodyHTML;
+function buildTable() {
+  var counter = 0;
+  var tbodyHTML = "";
+  for (var numberOfWeeks = 0; numberOfWeeks < 5; numberOfWeeks++) {
+    tbodyHTML += "<tr>";
+    for (var numberOfDays = 0; numberOfDays < 7; numberOfDays++) {
+      tbodyHTML += "<td>" + makeDaysArray()[counter] + "</td>";
+      if (counter <= makeDaysArray())
+        counter++;
+    }
+    tbodyHTML += "</tr>";
+  }
+  document.getElementsByTagName("tbody")[0].innerHTML = tbodyHTML;
+}
 
-console.log(isDayBlank);
+document.getElementById("month-year").innerHTML = getCurrentMonth() + " " + currentYear;
+
+buildTable();
+
+console.log(getDayOfTheWeek());
+console.log(today);
+console.log(getCurrentMonth());
+console.log(currentYear);
