@@ -86,18 +86,15 @@ function makeDaysArray() {
   return daysArray;
 };
 
-console.log(makeDaysArray());
-
 // build dates part of table
 function buildTable() {
-  var counter = 0;
+  var counter = 1;
   var tbodyHTML = "";
   for (var numberOfWeeks = 0; numberOfWeeks < 5; numberOfWeeks++) {
     tbodyHTML += "<tr>";
     for (var numberOfDays = 0; numberOfDays < 7; numberOfDays++) {
       tbodyHTML += "<td>" + makeDaysArray()[counter] + "</td>";
-      if (counter <= makeDaysArray())
-        counter++;
+      counter++;
     }
     tbodyHTML += "</tr>";
   }
@@ -107,8 +104,3 @@ function buildTable() {
 document.getElementById("month-year").innerHTML = getCurrentMonth() + " " + currentYear;
 
 buildTable();
-
-console.log(getDayOfTheWeek());
-console.log(today);
-console.log(getCurrentMonth());
-console.log(currentYear);
