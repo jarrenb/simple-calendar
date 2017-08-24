@@ -95,4 +95,5 @@ document.write(currentYear);
 document.write(daysInTheMonth);
 document.write(printDays(daysInTheMonth));
 
-// i think i've got all the data i need. now i just need to turn it into the table that i've prototyped
+// replace content and build table data
+document.getElementById("month-year").innerHTML = currentMonth + " " + currentYear;
