@@ -1,10 +1,13 @@
 var date = new Date();
 var currentYear = date.getFullYear();
-var currentMonthNumber = date.getMonth() + 1;
+var currentMonthNumber = date.getMonth();
+var currentMonthNumberPlus1 = currentMonthNumber + 1;
 var currentMonth = getCurrentMonth();
 var daysInTheMonth = getDaysInMonth();
 var dayOfTheWeek = getDayOfTheWeek();
 var today = date.getDate();
+var daysArray = [];
+var isDayBlank = getBlankDay();
 
 function getCurrentMonth() {
   var month;
@@ -78,14 +81,17 @@ function getDayOfTheWeek() {
 }
 
 function getDaysInMonth() {
-  return Math.round(((new Date(currentYear, currentMonthNumber))-(new Date(currentYear, currentMonthNumber - 1)))/86400000);
+  return Math.round(((new Date(currentYear, currentMonthNumberPlus1))-(new Date(currentYear, currentMonthNumberPlus1 - 1)))/86400000);
 }
 
 function printDays(days) {
-  var daysArray = [];
   for (var counter = 1; counter <= days; counter++)
     daysArray.push(counter);
   return daysArray;
+}
+
+function getBlankDay() {
+  return new Date(currentYear, currentMonthNumber, 1).getDay();
 }
 
 document.write(dayOfTheWeek);
@@ -95,5 +101,16 @@ document.write(currentYear);
 document.write(daysInTheMonth);
 document.write(printDays(daysInTheMonth));
 
-// replace content and build table data
 document.getElementById("month-year").innerHTML = currentMonth + " " + currentYear;
+
+// build dates part of table
+var tbodyHTML = "<tr>";
+for (var counter = 0; counter < 7; counter++)
+  // if (isDayBlank)
+  //   tbodyHTML += "<td>" + "</td>";
+  // else
+    tbodyHTML += "<td>" + daysArray[counter] + "</td>";
+tbodyHTML += "</tr>";
+document.getElementsByTagName("tbody")[0].innerHTML = tbodyHTML;
+
+console.log(isDayBlank);
