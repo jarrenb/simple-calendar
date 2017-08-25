@@ -1,94 +1,88 @@
-var date = new Date();
-var currentYear = date.getFullYear();
-var currentMonthNumber = date.getMonth();
-var normalizedMonthNumber = currentMonthNumber + 1;
-var today = date.getDate();
+// date = equals date
+// day = day of the week
 
-function getCurrentMonth() {
-  var month;
+var date = new Date();
+// current year = date.getFullYear();
+// current month = date.getMonth();
+// current date = date.getDate();
+// current day of week = date.getDay();
+
+function getDatesInMonth() {
+  return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+}
+
+function getFirstDayMonth() {
+  return new Date(date.getFullYear(), date.getMonth(), 1).getDay();
+}
+
+function getMonthName() {
+  var monthName;
   switch (date.getMonth()) {
     case 0:
-      month = "january";
+      monthName = "january";
       break;
     case 1:
-      month = "february";
+      monthName = "february";
       break;
     case 2:
-      month = "march";
+      monthName = "march";
       break;
     case 3:
-      month = "april";
+      monthName = "april";
       break;
     case 4:
-      month = "may";
+      monthName = "may";
       break;
     case 5:
-      month = "june";
+      monthName = "june";
       break;
     case 6:
-      month = "july";
+      monthName = "july";
       break;
     case 7:
-      month = "august";
+      monthName = "august";
       break;
     case 8:
-      month = "september";
+      monthName = "september";
       break;
     case 9:
-      month = "october";
+      monthName = "october";
       break;
     case 10:
-      month = "november";
+      monthName = "november";
       break;
     case 11:
-      month = "december";
+      monthName = "december";
       break;
   }
-  return month;
+  return monthName;
 };
 
-function getDaysInMonth() {
-  return Math.round(((new Date(currentYear, normalizedMonthNumber))-(new Date(currentYear, normalizedMonthNumber - 1)))/86400000);
-};
-
-function getLastMonthDates() {
-  var lastDayPrev = getDaysInMonth();
-  var firstDayCurrent = getFirstDay();
+function getPrevMonthDates() {
+  var lastDatePrev = new Date(date.getFullYear(), date.getMonth(), 0).getDate();
   var lastMonthDates = [];
-  for (var counter = firstDayCurrent; counter > 0; counter--) {
-    lastMonthDates.push(lastDayPrev);
-    lastDayPrev--;
+  for (var counter = getFirstDayMonth(); counter > 0; counter--) {
+    lastMonthDates.push(lastDatePrev);
+    lastDatePrev--;
   }
   lastMonthDates.reverse();
   return lastMonthDates;
 }
 
-console.log(getLastMonthDates());
-
-function getNextMonthDays() {
+function getNextMonthDates() {
   var nextMonthDays = [1, 2];
   return nextMonthDays;
 }
 
 function makeDaysArray() {
-  var daysArray = [30, 31];
-  for (var days = 1; days <= getDaysInMonth(); days++)
+  var daysArray = getPrevMonthDates();
+  for (var days = 1; days <= getDatesInMonth(); days++)
     daysArray.push(days);
   daysArray.push(1, 2);
   return daysArray;
 };
 
 console.log(makeDaysArray());
-
-function getFirstDay() {
-  var day = new Date(currentYear, currentMonthNumber, 1).getDay();
-  return day;
-}
-
-function getLastDay() {
-  var day = new Date(currentYear, currentMonthNumber, getDaysInMonth()).getDay();
-  return day;
-}
 
 function buildTable() {
   var counter = 0;
@@ -104,6 +98,6 @@ function buildTable() {
   document.getElementsByTagName("tbody")[0].innerHTML = tbodyHTML;
 }
 
-document.getElementById("month-year").innerHTML = getCurrentMonth() + " " + currentYear;
+document.getElementById("month-year").innerHTML = getMonthName() + " " + date.getFullYear();
 
 buildTable();
