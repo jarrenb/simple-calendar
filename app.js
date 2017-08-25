@@ -11,8 +11,12 @@ function getDatesInMonth() {
   return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
 }
 
-function getFirstDayMonth() {
+function getFirstDay() {
   return new Date(date.getFullYear(), date.getMonth(), 1).getDay();
+}
+
+function getLastDay() {
+  return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDay();
 }
 
 function getMonthName() {
@@ -61,7 +65,7 @@ function getMonthName() {
 function getPrevMonthDates() {
   var lastDatePrev = new Date(date.getFullYear(), date.getMonth(), 0).getDate();
   var lastMonthDates = [];
-  for (var counter = getFirstDayMonth(); counter > 0; counter--) {
+  for (var counter = getFirstDay(); counter > 0; counter--) {
     lastMonthDates.push(lastDatePrev);
     lastDatePrev--;
   }
@@ -69,20 +73,27 @@ function getPrevMonthDates() {
   return lastMonthDates;
 }
 
-function getNextMonthDates() {
-  var nextMonthDays = [1, 2];
-  return nextMonthDays;
+function getMonthDates() {
+  var dates = [];
+  for (var days = 1; days <= getDatesInMonth(); days++)
+    dates.push(days);
+  return dates;
 }
 
-function makeDaysArray() {
-  var daysArray = getPrevMonthDates();
-  for (var days = 1; days <= getDatesInMonth(); days++)
-    daysArray.push(days);
-  daysArray.push(1, 2);
-  return daysArray;
-};
+function getNextMonthDates() {
+  var firstDateNext = 1;
+  var nextMonthDates = [];
+  for (var counter = getLastDay() + 1; counter < 7; counter++) {
+    nextMonthDates.push(firstDateNext);
+    firstDateNext++;
+  }
+  return nextMonthDates;
+}
 
-console.log(makeDaysArray());
+function makeTableArray() {
+  var tableArray = getPrevMonthDates().concat(getMonthDates(), getNextMonthDates());
+  return tableArray;
+};
 
 function buildTable() {
   var counter = 0;
@@ -90,7 +101,7 @@ function buildTable() {
   for (var numberOfWeeks = 0; numberOfWeeks < 5; numberOfWeeks++) {
     tbodyHTML += "<tr>";
     for (var numberOfDays = 0; numberOfDays < 7; numberOfDays++) {
-      tbodyHTML += "<td>" + makeDaysArray()[counter] + "</td>";
+      tbodyHTML += "<td>" + makeTableArray()[counter] + "</td>";
       counter++;
     }
     tbodyHTML += "</tr>";
