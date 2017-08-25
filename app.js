@@ -51,34 +51,6 @@ function getDaysInMonth() {
   return Math.round(((new Date(currentYear, currentMonthNumberPlus1))-(new Date(currentYear, currentMonthNumberPlus1 - 1)))/86400000);
 };
 
-function getDayOfTheWeek() {
-  var day;
-  switch (date.getDay()) {
-    case 0:
-      day = "sunday";
-      break;
-    case 1:
-      day = "monday";
-      break;
-    case 2:
-      day = "tuesday";
-      break;
-    case 3:
-      day = "wednesday";
-      break;
-    case 4:
-      day = "thursday";
-      break;
-    case 5:
-      day = "friday";
-      break;
-    case 6:
-      day = "saturday";
-      break;
-  }
-  return day;
-};
-
 function makeDaysArray() {
   var daysArray = [];
   for (var days = 0; days <= getDaysInMonth(); days++)
@@ -86,7 +58,6 @@ function makeDaysArray() {
   return daysArray;
 };
 
-// build dates part of table
 function buildTable() {
   var counter = 1;
   var tbodyHTML = "";
