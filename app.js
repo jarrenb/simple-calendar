@@ -51,6 +51,25 @@ function getDaysInMonth() {
   return Math.round(((new Date(currentYear, normalizedMonthNumber))-(new Date(currentYear, normalizedMonthNumber - 1)))/86400000);
 };
 
+function getLastMonthDates() {
+  var lastDayPrev = getDaysInMonth();
+  var firstDayCurrent = getFirstDay();
+  var lastMonthDates = [];
+  for (var counter = firstDayCurrent; counter > 0; counter--) {
+    lastMonthDates.push(lastDayPrev);
+    lastDayPrev--;
+  }
+  lastMonthDates.reverse();
+  return lastMonthDates;
+}
+
+console.log(getLastMonthDates());
+
+function getNextMonthDays() {
+  var nextMonthDays = [1, 2];
+  return nextMonthDays;
+}
+
 function makeDaysArray() {
   var daysArray = [30, 31];
   for (var days = 1; days <= getDaysInMonth(); days++)
@@ -70,12 +89,6 @@ function getLastDay() {
   var day = new Date(currentYear, currentMonthNumber, getDaysInMonth()).getDay();
   return day;
 }
-
-// day of the month
-// is it equal to the value produced by getFirstDay()? true
-// is it equal to the value produced by getDaysInMonth()? true
-// is it in between the first and last day of the month? true
-// is it not one of those three conditions? false
 
 function buildTable() {
   var counter = 0;
