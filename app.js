@@ -3,7 +3,7 @@
 
 var date = new Date();
 
-function getDatesInMonth() {
+function getDates() {
   return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
 }
 
@@ -58,7 +58,7 @@ function getMonthName() {
   return monthName;
 };
 
-function getPrevMonthDates() {
+function makePrevDates() {
   var lastDatePrev = new Date(date.getFullYear(), date.getMonth(), 0).getDate();
   var lastMonthDates = [];
   for (var counter = getFirstDay(); counter > 0; counter--) {
@@ -69,14 +69,14 @@ function getPrevMonthDates() {
   return lastMonthDates;
 }
 
-function getMonthDates() {
+function makeDates() {
   var dates = [];
-  for (var days = 1; days <= getDatesInMonth(); days++)
+  for (var days = 1; days <= getDates(); days++)
     dates.push(days);
   return dates;
 }
 
-function getNextMonthDates() {
+function makeNextDates() {
   var firstDateNext = 1;
   var nextMonthDates = [];
   for (var counter = getLastDay() + 1; counter < 7; counter++) {
@@ -86,8 +86,8 @@ function getNextMonthDates() {
   return nextMonthDates;
 }
 
-function makeTableArray() {
-  var tableArray = getPrevMonthDates().concat(getMonthDates(), getNextMonthDates());
+function makeTable() {
+  var tableArray = makePrevDates().concat(makeDates(), makeNextDates());
   return tableArray;
 };
 
@@ -97,7 +97,7 @@ function buildTable() {
   for (var numberOfWeeks = 0; numberOfWeeks < 5; numberOfWeeks++) {
     tbodyHTML += "<tr>";
     for (var numberOfDays = 0; numberOfDays < 7; numberOfDays++) {
-      tbodyHTML += "<td>" + makeTableArray()[counter] + "</td>";
+      tbodyHTML += "<td>" + makeTable()[counter] + "</td>";
       counter++;
     }
     tbodyHTML += "</tr>";
