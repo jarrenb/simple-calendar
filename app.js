@@ -2,10 +2,6 @@
 // day = day of the week
 
 var date = new Date();
-// current year = date.getFullYear();
-// current month = date.getMonth();
-// current date = date.getDate();
-// current day of week = date.getDay();
 
 function getDatesInMonth() {
   return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
