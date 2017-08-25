@@ -1,7 +1,7 @@
 var date = new Date();
 var currentYear = date.getFullYear();
 var currentMonthNumber = date.getMonth();
-var currentMonthNumberPlus1 = currentMonthNumber + 1;
+var normalizedMonthNumber = currentMonthNumber + 1;
 var today = date.getDate();
 
 function getCurrentMonth() {
@@ -48,18 +48,37 @@ function getCurrentMonth() {
 };
 
 function getDaysInMonth() {
-  return Math.round(((new Date(currentYear, currentMonthNumberPlus1))-(new Date(currentYear, currentMonthNumberPlus1 - 1)))/86400000);
+  return Math.round(((new Date(currentYear, normalizedMonthNumber))-(new Date(currentYear, normalizedMonthNumber - 1)))/86400000);
 };
 
 function makeDaysArray() {
-  var daysArray = [];
-  for (var days = 0; days <= getDaysInMonth(); days++)
+  var daysArray = [30, 31];
+  for (var days = 1; days <= getDaysInMonth(); days++)
     daysArray.push(days);
+  daysArray.push(1, 2);
   return daysArray;
 };
 
+console.log(makeDaysArray());
+
+function getFirstDay() {
+  var day = new Date(currentYear, currentMonthNumber, 1).getDay();
+  return day;
+}
+
+function getLastDay() {
+  var day = new Date(currentYear, currentMonthNumber, getDaysInMonth()).getDay();
+  return day;
+}
+
+// day of the month
+// is it equal to the value produced by getFirstDay()? true
+// is it equal to the value produced by getDaysInMonth()? true
+// is it in between the first and last day of the month? true
+// is it not one of those three conditions? false
+
 function buildTable() {
-  var counter = 1;
+  var counter = 0;
   var tbodyHTML = "";
   for (var numberOfWeeks = 0; numberOfWeeks < 5; numberOfWeeks++) {
     tbodyHTML += "<tr>";
